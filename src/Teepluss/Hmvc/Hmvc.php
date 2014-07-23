@@ -85,12 +85,6 @@ class Hmvc {
             $originalInput = $this->request->input();
             $originalRoute = $this->router->getCurrentRoute();
 
-            // Masking route to allow testing with PHPUnit.
-            if ( ! $originalRoute instanceof Route)
-            {
-                $originalRoute = new Route(new \Symfony\Component\HttpFoundation\Request());
-            }
-
             // Create a new request to the API resource
             $request = $this->request->create($uri, strtoupper($method), $parameters);
 
@@ -120,7 +114,6 @@ class Hmvc {
 
             // Restore the request input and route back to the original state.
             $this->request->replace($originalInput);
-            $this->router->setCurrentRoute($originalRoute);
 
             return $response;
         }
